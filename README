@@ -1,0 +1,170 @@
+2018-11-20 Tue 08:21  
+
+Hello World. 
+
+1. Understand
+2. Plan
+3. Execute the plan
+4. Review
+
+Prerequisites for style transfer: 
+
+* Python
+* Convolutional Neural Networks (CNNs) 
+
+Jargon: 
+
+* Content image
+* Style image
+* Generated image 
+* Pooling: otherwise known as downsampling 
+    - Takes a filter (say 2x2) with same stride  length (2) 
+    - Non-overlapping regions
+    - Takes the maximum number in every subregion 
+    - Maxpooling, average pooling, L2-norm pooling 
+    - Why pool? 1) Reduces comp cost 2) Reduces overfitting 
+* Filter/Neuron/Kernel: 
+    - Analogy of a flashlight
+    - Can be thought of as a feature identifier
+    - Is just the Frobenius inner product! 
+    - def filter(A, B): np.dot(vec(A).T, vec(B))
+* Receptive field: region that the kernel is shining over 
+* Weights/parameters: numbers that make up the filter 
+* Convolving means sliding 
+* Activation map/Feature map: image * filter 
+* Softmax: k-dimensional logistic function
+* Fully connected layer: Neural Network inputs: act map, outputs: class 
+* Backpropagation: training of the weights/parameters 
+    - forward, loss, backward, weight updates
+    - Weights = weights + learning_param * deriv(loss function, weights) 
+* Hyperparameter: parameter chosen by scientist, not learnt 
+* Batch: instead of taking all training images, we take a random sample
+* Stride: step the filter makes around the image as it convolves 
+* Zero-padding: pads input volume with zeros around the border 
+    - Zero_padding = (K-1)/2, where K is filter size (square)
+    - filter 5x5x3 then Zero_padding = (5-1)/2 = 2 
+* Conv layer: input => does something => returns feature/activation map 
+* ReLU: rectified linear unit, apply after conv layer on feature map 
+    - Why? To introduce non-linearities 
+* Dropout: randomly set some activations to zero, robustness
+* L2-norm: just the Euclidian distance 
+* Gram matrix: 
+    - Description of the correlation bewteen the feature maps 
+    - Act as a measure of style itself later on 
+    - stack the channels and then multiply it by its transpose
+
+Style transfer 
+
+* We take a content image
+* We take a style image
+* In some way shape or form, we can transfer the "style" from the style image
+  and the "content"  from the content image, and generate a new image in that
+  style while retaining the content. 
+* Divide the loss into two parts 
+* Inputs to loss function: 
+    - Style image
+    - Content image 
+    - Generated image 
+* Value of hidden unit activation is input for loss function (wrong?)
+* "Content label" are the activations of the content image 
+* "Style label" are the NOT activations of the style image 
+* To calculate the style loss feature repr of many layers (shallow and deep) 
+* Find the correlations between act across diff channels of the same layer
+* "Style label" is the Gram matrix of the style image! 
+* To find style loss, we compare the L2-norm of the Gram matrix of S and G 
+
+
+Food for thought: 
+
+* We have to think very carefully about what exactly content is and what exactly
+  style is and more importantly what we think style is and the algorithm thinks
+  it is. 
+    => Style is defined as the Gram matrix of the features of the style image 
+        => Style is defined as the weighted sum of multiple gram matrices of
+           different activation layers 
+    => Content is just the activations of the content image 
+* We probably need to learn a bit more about CNNs 
+    => We did this 
+
+Convolutional Neural Networks (CNNs): 
+
+* Need to understand this for Neural Style Transfer 
+* 2012 ImageNet Alex Krizhevsky 26% to 15% 
+* Biologically inspired Hubel and Wisel 1962 
+* Image classification: Input: image, output: class 
+* CNNs tries to learn "abstract concepts" through conv. layers 
+* Input image => conv layers => Output p(class) 
+* First layer is always a convolutional layer (!) 
+* Analogy for conv layer is a flashlight 
+* Depth of filter has to be the same as depth of input 
+* Input image 32x32x3 
+* Filter/Kernel dimensions 5x5x3 
+* After applying the filter on the input image you get a feature map 28x28x1
+* Two filters (5x5x3) => feature map of 28x28x2
+* The filters on the first conv layer shine around the input image and activiate
+  when the specific feature matches the input volume. 
+* Input => LOTS OF LAYERS => fully connected layer => output 
+* The feature map describes the locations on the image in which the low level
+  features appear 
+* As you go deeper, the filter becomes relatively larger 
+* Final fully connected layer does the N-fold classification 
+* CNN: input => feature extraction => neural network => output 
+
+VGG 2016: 
+
+* Input image 224x224 image
+* Conv+ReLU, input: 224x224x3, 
+
+
+Running questions: 
+
+* What is VGG16 architecture 
+    - 224x224x3 input image: width x weight x RGB channel 
+    - 1st conv layer 3x3 filter/kernel with 64 feature maps 224x224x64
+* Why do we see two conv+ReLU layers in the image? (Figure 2, that is) 
+
+Sources: 
+
+* https://towardsdatascience.com/neural-style-transfer-tutorial-part-1-f5cd3315fa7f
+* https://ayearofai.com/rohan-lenny-2-convolutional-neural-networks-5f4cd480a60b?gi=f960e1292a17
+* https://adeshpande3.github.io/A-Beginner%27s-Guide-To-Understanding-Convolutional-Neural-Networks/
+
+Future reading: 
+
+* Neural Networks and Deep Learning 
+* ReLU Hanhloser et al 2000 
+* Visualisation of ConvNets (Zeiler, Fergus, 2013) 
+* ReLU improve RBMs (Nair and Hinton 2010, ICML)
+
+Answered questions: 
+
+How can we generate 64 features from only 3 channels
+    => By adding more filters. Every filter is a new feature map, 64 filters
+Why is the first feature map 224x224x64 and not smaller? kernel is 3x3. 
+    => Because of zero padding! Shin1hi was right. 
+
+Crazy ideas: 
+
+* Frobenius inner product => could use other inner products? 
+* Look at the relative size of the filters wrt the input image, constant? 
+    - What features are trained when relation is kept constant/growing, etc. 
+* Prior weight randomization through DNA (mrkontrast) 
+* 3D machine learning 
+* Different kind of pooling layers 
+
+Other notes: 
+
+* All models are wrong, some are useful
+* The map is not the territory 
+* :imap kj <Esc>
+* Quitting in vim is done with :q
+* Ctr + alt + z is for undoing multiple times in photoshop (mrkontrast)
+* Formal language theory, category theory (shin1hi)
+* Lenzyzampino  works near the vatican 
+* Google Duplex 
+
+Future sessions:
+
+1. Understanding Neural style
+2. Program in Neural style
+3. Write-up 
