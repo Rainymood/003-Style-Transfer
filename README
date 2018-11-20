@@ -1,11 +1,17 @@
 2018-11-20 Tue 08:21  
 
-Hello World. 
+About 
 
-1. Understand
-2. Plan
-3. Execute the plan
-4. Review
+These are the accompanying files from my 6th episode on machine learning in
+which we studied Neural Style Transfer. In this stream we studied two tutorials
+(see [1] and [2]) and followed them from start to finish. 
+
+We stared with neural style transfer but quickly found out that we need more
+knowledge about Convolutional Neural Networks (CNNs) and we discussed those as
+well. 
+
+In the next stream, we are going to work on programming in, or prototyping a
+neural style transfer model. 
 
 Prerequisites for style transfer: 
 
@@ -125,9 +131,8 @@ Running questions:
 
 Sources: 
 
-* https://towardsdatascience.com/neural-style-transfer-tutorial-part-1-f5cd3315fa7f
-* https://ayearofai.com/rohan-lenny-2-convolutional-neural-networks-5f4cd480a60b?gi=f960e1292a17
-* https://adeshpande3.github.io/A-Beginner%27s-Guide-To-Understanding-Convolutional-Neural-Networks/
+* [1] https://towardsdatascience.com/neural-style-transfer-tutorial-part-1-f5cd3315fa7f
+* [2] https://adeshpande3.github.io/A-Beginner%27s-Guide-To-Understanding-Convolutional-Neural-Networks/
 
 Future reading: 
 
@@ -168,3 +173,9 @@ Future sessions:
 1. Understanding Neural style
 2. Program in Neural style
 3. Write-up 
+
+Github (yes I'm a noob) 
+
+git add . 
+git commit -m "Useful commit message" (i.e. "Add X", "Fix X", "Change X") 
+git push -u origin master 
